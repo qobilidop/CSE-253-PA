@@ -1,12 +1,29 @@
-from collections import namedtuple
-
 from mnist import MNIST
 import numpy as np
 
 
-def read_data_sets(directory, one_hot=False):
-    FullSets = namedtuple('FullSets', ['train', 'test', 'validation'])
+class FullDataSets(object):
+    def __init__(self, train, test, validation):
+        self.train = train
+        self.test = test
+        self.validation = validation
 
+
+class DataSet(object):
+    def __init__(self, images, labels):
+        self.images = np.array(images)
+        self.labels = np.array(labels)
+
+    @property
+    def dim(self):
+        return self.images.shape[1]
+
+    @property
+    def size(self):
+        return self.images.shape[0]
+
+
+def read_data_sets(one_hot=False, directory='mnist'):
     mndata = MNIST(directory)
 
     train_raw = mndata.load_training()
@@ -26,18 +43,17 @@ def read_data_sets(directory, one_hot=False):
             one_hot_labels[range(size), data_set.labels] = 1
             data_set.labels = one_hot_labels
 
-    return FullSets(train=train, test=test, validation=validation)
+    return FullDataSets(train=train, test=test, validation=validation)
 
 
-class DataSet(object):
-    def __init__(self, images, labels):
-        self.images = np.array(images)
-        self.labels = np.array(labels)
+def read_logistic_data_sets(class_1, class_2, directory='mnist'):
+    data_sets = read_data_sets(directory=directory)
 
-    @property
-    def dim(self):
-        return self.images.shape[1]
+    for data_set in [data_sets.train, data_sets.test, data_sets.validation]:
+        mask = (data_set.labels == class_1) | (data_set.labels == class_2)
+        data_set.images = data_set.images[mask, :]
+        data_set.labels = data_set.labels[mask]
+        data_set.labels[data_set.labels == class_1] = 1
+        data_set.labels[data_set.labels == class_2] = 0
 
-    @property
-    def size(self):
-        return self.images.shape[0]
+    return data_sets

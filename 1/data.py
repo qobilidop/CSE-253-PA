@@ -12,6 +12,7 @@ class FullDataSets(object):
 class DataSet(object):
     def __init__(self, images, labels):
         self.images = np.array(images)
+        self.images = np.insert(self.images, 0, 1, axis=1)
         self.labels = np.array(labels)
 
     @property

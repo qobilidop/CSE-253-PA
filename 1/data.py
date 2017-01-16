@@ -28,14 +28,20 @@ def read_data_sets(one_hot=False, directory='mnist'):
     mndata = MNIST(directory)
 
     train_raw = mndata.load_training()
-    selection = np.arange(0, len(train_raw[1]), 10)
-    train = DataSet(images=np.delete(train_raw[0], selection, 0),
-                    labels=np.delete(train_raw[1], selection, 0))
-    validation = DataSet(images=np.array(train_raw[0])[selection],
-                         labels=np.array(train_raw[1])[selection])
+    # Use the first 20000
+    images = train_raw[0][:20000]
+    labels = train_raw[1][:20000]
+    selection = np.arange(0, len(labels), 10)
+    train = DataSet(images=np.delete(images, selection, 0),
+                    labels=np.delete(labels, selection, 0))
+    validation = DataSet(images=np.array(images)[selection],
+                         labels=np.array(labels)[selection])
 
     test_raw = mndata.load_testing()
-    test = DataSet(images=test_raw[0], labels=test_raw[1])
+    # Use the first 2000
+    images = test_raw[0][:2000]
+    labels = test_raw[1][:2000]
+    test = DataSet(images=images, labels=labels)
 
     if one_hot:
         for data_set in [train, test, validation]:

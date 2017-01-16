@@ -28,11 +28,11 @@ def read_data_sets(one_hot=False, directory='mnist'):
     mndata = MNIST(directory)
 
     train_raw = mndata.load_training()
-    boundary = 55000
-    train = DataSet(images=train_raw[0][:boundary],
-                    labels=train_raw[1][:boundary])
-    validation = DataSet(images=train_raw[0][boundary:],
-                         labels=train_raw[1][boundary:])
+    selection = np.arange(0, len(train_raw[1]), 10)
+    train = DataSet(images=np.delete(train_raw[0], selection, 0),
+                    labels=np.delete(train_raw[1], selection, 0))
+    validation = DataSet(images=np.array(train_raw[0])[selection],
+                         labels=np.array(train_raw[1])[selection])
 
     test_raw = mndata.load_testing()
     test = DataSet(images=test_raw[0], labels=test_raw[1])

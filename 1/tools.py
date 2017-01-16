@@ -30,6 +30,10 @@ class TrainingResults(object):
         plt.xlabel('epoch')
         plt.ylabel('percent correct')
 
+    def plot_final_weights(self):
+        weights = self.records['weights'][epoch_final]
+        weights =
+
 
 def train(nn_class, dss, rate, lam=0, epoch_min=None, epoch_max=None,
           early_stopping=3):

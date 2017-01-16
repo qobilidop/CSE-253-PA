@@ -12,7 +12,7 @@ class TrainingResults(object):
         plt.plot(self.record['E_train'], label='train')
         plt.plot(self.record['E_hold'], label='hold-out')
         plt.plot(self.record['E_test'], label='test')
-        plt.legend()
+        plt.legend(loc=0)
         plt.xlabel('epoch')
         plt.ylabel('loss function')
 
@@ -21,7 +21,7 @@ class TrainingResults(object):
         plt.plot(self.record['c_train'], label='train')
         plt.plot(self.record['c_hold'], label='hold-out')
         plt.plot(self.record['c_test'], label='test')
-        plt.legend()
+        plt.legend(loc=0)
         plt.xlabel('epoch')
         plt.ylabel('percent correct')
 

@@ -7,6 +7,10 @@ class TrainingResults(object):
         self.records = records
         self.epoch_final = epoch_final
 
+    @property
+    def final_weights(self):
+        return self.records['weights'][self.epoch_final]
+
     def plot_loss_function(self):
         plt.figure()
         plt.plot(self.records['E_train'], label='train')
@@ -30,13 +34,10 @@ class TrainingResults(object):
         plt.xlabel('epoch')
         plt.ylabel('percent correct')
 
-    def plot_final_weights(self):
-        weights = self.records['weights'][epoch_final]
-        weights =
 
-
-def train(nn_class, dss, rate, lam=0, epoch_min=None, epoch_max=None,
-          early_stopping=3):
+def train(nn_class, dss, rate,
+          lam=0, regularization=None,
+          epoch_min=None, epoch_max=None, early_stopping=3):
     nn = nn_class(dss.train.dim)
     records = pd.DataFrame()
     epoch = 0
@@ -45,7 +46,7 @@ def train(nn_class, dss, rate, lam=0, epoch_min=None, epoch_max=None,
         record = pd.Series()
 
         nn.use_labeled_images(dss.train)
-        nn.update(rate(epoch), lam)
+        nn.update(rate(epoch), lam=lam, regularization=regularization)
         record['weights'] = nn.weights
         record['E_train'] = nn.loss_function()
         record['c_train'] = nn.percent_correct()

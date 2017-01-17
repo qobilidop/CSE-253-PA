@@ -38,7 +38,7 @@ class TrainingResults(object):
 def train(nn_class, dss, rate,
           lam=0, regularization=None,
           epoch_min=None, epoch_max=None, early_stopping=3):
-    nn = nn_class(dss.train.dim)
+    nn = nn_class(dss.train.images, dss.train.labels)
     records = pd.DataFrame()
     epoch = 0
 

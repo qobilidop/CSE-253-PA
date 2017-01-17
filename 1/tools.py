@@ -13,9 +13,9 @@ class TrainingResults(object):
 
     def plot_loss_function(self):
         plt.figure()
-        plt.plot(self.records['E_train'], label='train')
-        plt.plot(self.records['E_hold'], label='hold-out')
-        plt.plot(self.records['E_test'], label='test')
+        plt.plot(self.records['E_train'], label='training set')
+        plt.plot(self.records['E_hold'], label='hold-out set')
+        plt.plot(self.records['E_test'], label='test set')
         plt.axvline(self.epoch_final, color='gray',
                     label='final epoch {}'.format(self.epoch_final))
         plt.legend(loc=0)
@@ -25,9 +25,9 @@ class TrainingResults(object):
 
     def plot_percent_correct(self):
         plt.figure()
-        plt.plot(self.records['c_train'], label='train')
-        plt.plot(self.records['c_hold'], label='hold-out')
-        plt.plot(self.records['c_test'], label='test')
+        plt.plot(self.records['c_train'], label='training set')
+        plt.plot(self.records['c_hold'], label='hold-out set')
+        plt.plot(self.records['c_test'], label='test set')
         plt.axvline(self.epoch_final, color='gray',
                     label='final epoch {}'.format(self.epoch_final))
         plt.legend(loc=0)

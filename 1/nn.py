@@ -21,7 +21,8 @@ class NeuralNetwork(object):
         x = self.inputs  # N * D
         t = self.targets  # N * K
         y = self.outputs()  # N * K
-        return -np.tensordot(x, (t - y), axes=[0, 0])  # D * K
+        N = self.inputs.shape[0]
+        return -np.tensordot(x, (t - y), axes=[0, 0]) / N  # D * K
 
     def outputs(self):
         f = self.activation_function

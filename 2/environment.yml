@@ -3,3 +3,5 @@ dependencies:
 - jupyter=1.0.0=py35_3
 - matplotlib=2.0.0=np111py35_0
 - numpy=1.11.3=py35_0
+- pip:
+  - python-mnist==0.3

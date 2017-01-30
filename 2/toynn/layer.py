@@ -1,5 +1,7 @@
 import numpy as np
 
+from toynn.util import prevent_nan
+
 
 class Layer(object):
     def __init__(self, size):
@@ -46,6 +48,7 @@ class DenseLayer(Layer):
 
 
 class LogisticLayer(DenseLayer):
+    @prevent_nan
     def f(self):
         return 1 / (1 + np.exp(-self.a))
 
@@ -54,6 +57,7 @@ class LogisticLayer(DenseLayer):
 
 
 class SigmoidLayer(DenseLayer):
+    @prevent_nan
     def f(self):
         return 1.7159 * np.tanh(2 / 3 * self.a)
 
@@ -64,6 +68,7 @@ class SigmoidLayer(DenseLayer):
 
 
 class SoftmaxLayer(DenseLayer):
+    @prevent_nan
     def f(self):
         exp = np.exp(self.a)
         return exp / exp.sum(axis=1)[:, np.newaxis]

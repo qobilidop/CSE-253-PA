@@ -5,6 +5,7 @@ from toynn.layer import LogisticLayer
 from toynn.layer import SigmoidLayer
 from toynn.layer import SoftmaxLayer
 from toynn.util import sane_log
+from toynn.util import prevent_nan
 
 
 class _BaseNetwork(object):
@@ -46,6 +47,7 @@ class NaiveNetwork(_BaseNetwork):
         self.y = None
 
     @property
+    @prevent_nan
     def loss(self):
         """Cross entropy loss."""
         return -(self.t * sane_log(self.y)).sum(axis=1).mean()

@@ -92,7 +92,7 @@ class NaiveNetwork(_BaseNetwork):
             layer.grad = layer.prev.y.T @ delta / self.sample_size
 
 
-class Network(NaiveNetwork):
+class TrickNetwork(NaiveNetwork):
     _hidden_layer_class = SigmoidLayer
 
     def initialize(self):

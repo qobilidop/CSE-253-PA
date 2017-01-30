@@ -97,7 +97,9 @@ class Network(NaiveNetwork):
 
     def initialize(self):
         for layer in self.layers[1:]:
-            layer.w = np.random.randn(*layer.w.shape)
+            fan_in = layer.w.shape[0]
+            std = fan_in ** -0.5
+            layer.w = np.random.randn(*layer.w.shape) * std
             layer.v = np.zeros(layer.w.shape)
 
     def update(self, eta, mu=0):

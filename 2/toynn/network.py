@@ -63,7 +63,8 @@ class NaiveNetwork(_BaseNetwork):
 
     def initialize(self):
         for layer in self.layers[1:]:
-            layer.w = np.random.randn(*layer.w.shape)
+            fan_in = layer.w.shape[0]
+            layer.w = (np.random.rand(*layer.w.shape) - .5) / fan_in
 
     def feed_data(self, x, t):
         self.x = x

@@ -41,7 +41,8 @@ class TrainingResult(object):
         plt.ylabel(quantity.capitalize())
 
 
-def train(network, dss, update_params,
+def train(network, dss,
+          eta0=None, tau=None, mu=0,
           minibatch_size=None, capture_interval=1,
           epoch_min=None, epoch_max=None, early_stopping=3):
     if minibatch_size is None:
@@ -54,7 +55,8 @@ def train(network, dss, update_params,
         minibatches = dss.training.shuffle().minibatches(minibatch_size)
         minibatch_num = len(minibatches)
         for i, ds in enumerate(minibatches):
-            network.feed_data(ds.images, ds.labels).update(**update_params)
+            eta = eta0 / (1 + epoch / tau)
+            network.feed_data(ds.images, ds.labels).update(eta=eta, mu=mu)
             if i % capture_interval == 0:
                 result.capture(epoch, network, dss)
             if (epoch_max is not None) and (epoch > epoch_max):

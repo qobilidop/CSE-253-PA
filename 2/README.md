@@ -9,7 +9,7 @@ conda env create -f environment.yml
 Activate the conda environment
 
 ```bash
-conda activate pa2
+source activate pa2
 ```
 
 Open Jupyter notebook

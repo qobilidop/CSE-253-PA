@@ -64,7 +64,7 @@ class SigmoidLayer(DenseLayer):
     def f_prime(self):
         a = 1.7159
         b = 2 / 3
-        return a * b - a / b * self.y ** 2
+        return a * b - b / a * self.y ** 2
 
 
 class SoftmaxLayer(DenseLayer):

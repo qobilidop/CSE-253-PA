@@ -44,11 +44,11 @@ class DataSet(object):
         self.labels = self.labels[p]
         return self
 
-    def minibatches(self, batch_size):
-        batch_num = self.size % batch_size
-        return [DataSet(images=i, labels=l) for i, l in
-                zip(np.array_split(self.images, batch_num),
-                    np.array_split(self.labels, batch_num))]
+    def minibatches(self, minibatch_size):
+        minibatch_num = self.size // minibatch_size
+        return [DataSet(images=img, labels=lbl) for img, lbl in
+                zip(np.array_split(self.images, minibatch_num),
+                    np.array_split(self.labels, minibatch_num))]
 
 
 def read_data_sets(directory='data'):

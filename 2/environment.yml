@@ -1,7 +1,9 @@
-name: dxpa2
+name: pa2
 dependencies:
 - jupyter=1.0.0=py35_3
 - matplotlib=2.0.0=np111py35_0
 - numpy=1.11.3=py35_0
+- pandas=0.19.2=np111py35_1
+- python=3.5.2=0
 - pip:
   - python-mnist==0.3

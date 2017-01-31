@@ -1,13 +1,21 @@
 # Programming Assignment 2
 
-To reproduce the conda environment
+To reproduce the results, first create a conda environment
 
 ```bash
 conda env create -f environment.yml
 ```
 
-To activate the conda environment
+Activate the conda environment
 
 ```bash
-conda activate dxpa2
+conda activate pa2
 ```
+
+Open Jupyter notebook
+
+```bash
+jupyter notebook
+```
+
+And run the notebook `solution.ipynb`. The plots will also be saved into the `figs` directory.

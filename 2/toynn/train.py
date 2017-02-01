@@ -44,7 +44,7 @@ class TrainingResult(object):
 def train(network, dss,
           eta0=None, tau=None, mu=0,
           minibatch_size=None, capture_interval=1,
-          epoch_min=None, epoch_max=None, early_stopping=3):
+          epoch_min=None, epoch_max=None, patience=10):
     if minibatch_size is None:
         minibatch_size = dss.training.size
     result = TrainingResult()
@@ -62,11 +62,7 @@ def train(network, dss,
             if (epoch_max is not None) and (epoch > epoch_max):
                 return result
             if (epoch_min is None) or (epoch > epoch_min):
-                if early_stopping:
-                    s = early_stopping
-                    recent_loss = result.history['loss_validation'][-(s + 1):]
-                    consistent_increase = (recent_loss.diff()[-s:] > 0).all()
-                    if consistent_increase:
-                        return result
+                if epoch - result.final_epoch > patience:
+                    return result
             print('Epoch', epoch, end='\r')
             epoch += 1 / minibatch_num

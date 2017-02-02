@@ -42,7 +42,7 @@ class TrainingResult(object):
 
 
 def train(network, dss,
-          eta0=None, tau=None, mu=0,
+          eta0=None, tau=None, mu=0, l1=0, l2=0,
           minibatch_size=None, capture_interval=1,
           epoch_min=None, epoch_max=None, patience=10):
     if minibatch_size is None:
@@ -56,7 +56,8 @@ def train(network, dss,
         minibatch_num = len(minibatches)
         for i, ds in enumerate(minibatches):
             eta = eta0 / (1 + epoch / tau)
-            network.feed_data(ds.images, ds.labels).update(eta=eta, mu=mu)
+            network.feed_data(ds.images, ds.labels).update(eta=eta, mu=mu,
+                                                           l1=l1, l2=l2)
             if i % capture_interval == 0:
                 result.capture(epoch, network, dss)
             if (epoch_max is not None) and (epoch > epoch_max):

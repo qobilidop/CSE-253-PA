@@ -71,11 +71,12 @@ class NaiveNetwork(_BaseNetwork):
         self.t = t
         return self
 
-    def update(self, eta, mu=0):
+    def update(self, eta, mu=0, l1=0, l2=0):
         self.fprop()
         self.bprop()
         for layer in reversed(self.dense_layers):
-            layer.w += - eta * layer.grad
+            grad = layer.grad + l1 * np.sign(layer.w) + l2 * 2 * layer.w
+            layer.w += - eta * grad
 
     def fprop(self):
         self.input_layer.y = self.x
@@ -103,9 +104,10 @@ class TrickNetwork(NaiveNetwork):
                                        size=layer.w.shape)
             layer.v = np.zeros(layer.w.shape)
 
-    def update(self, eta, mu=0):
+    def update(self, eta, mu=0, l1=0, l2=0):
         self.fprop()
         self.bprop()
         for layer in reversed(self.hidden_layers):
-            layer.v = mu * layer.v - eta * layer.grad
+            grad = layer.grad + l1 * np.sign(layer.w) + l2 * 2 * layer.w
+            layer.v = mu * layer.v - eta * grad
             layer.w += layer.v

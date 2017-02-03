@@ -1,5 +1,7 @@
 # Programming Assignment 2
 
+# Directory Structure
+
 To reproduce the results, first create a conda environment
 
 ```bash
